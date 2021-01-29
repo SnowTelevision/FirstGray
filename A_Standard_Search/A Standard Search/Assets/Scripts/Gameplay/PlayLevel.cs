@@ -16,12 +16,53 @@ public class PlayLevel : MonoBehaviour
     public int playerYcoord;
     public SinglePattern currentPattern;
     public List<GameObject> currentGridDisplays; // Objects for all the grids in current level
+    private int startPointXcoord;
+    private int startPointYcoord;
+    private int exitPointXcoord;
+    private int exitPointYcoord;
 
+
+    /// <summary>
+    /// Keyboard controls
+    /// </summary>
     private void Update()
     {
-
+        if (Input.GetKey(KeyCode.W) | Input.GetKey(KeyCode.UpArrow))//move up
+        {
+            this.PlayerMoved(0, 1);
+        }
+        if (Input.GetKey(KeyCode.S) | Input.GetKey(KeyCode.DownArrow))//move down
+        {
+            this.PlayerMoved(0, -1);
+        }
+        if (Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow))//move left
+        {
+            this.PlayerMoved(-1, 0);
+        }
+        if (Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow))//move right
+        {
+            this.PlayerMoved(1, 0);
+        }
+        if (Input.GetKey(KeyCode.Space))// press space
+        {
+            this.CheckWinning();
+        }
     }
 
+    /// <summary>
+    /// Set start point and exit point randomly
+    /// </summary>
+    private void SetRandomStartAndExit() {
+        while (true)
+        {
+            startPointXcoord = Random.Range(0, currentPattern.width);
+            startPointYcoord = Random.Range(0, currentPattern.height);//get a random start point
+            exitPointXcoord = Random.Range(0, currentPattern.width);
+            exitPointYcoord = Random.Range(0, currentPattern.height);//get a random exit point
+            if (startPointXcoord != exitPointXcoord || startPointYcoord != exitPointYcoord)
+                break;//check if player was born at exit
+        }
+    }
     /// <summary>
     /// When player moves in a direction
     /// </summary>
@@ -102,6 +143,9 @@ public class PlayLevel : MonoBehaviour
     /// <returns></returns>
     public bool CheckWinning()
     {
-        return false;
+        if (playerXcoord == exitPointXcoord && playerYcoord == exitPointYcoord)
+            return true;
+        else
+            return false;
     }
 }
