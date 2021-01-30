@@ -11,16 +11,21 @@ public class Tile : MonoBehaviour
 
 
     public int currState;
+    [ShowInInspector]
     private Animator animator;
     public bool isExit;
 
     void Start()
     {
-       animator = GetComponent<Animator>();
+       //animator = GetComponent<Animator>();
        isExit = false;
     }
-
-    [ShowInInspector]
+    public void IAmExit()
+    {
+        isExit = 1;
+        StateChange(currState);
+    }
+    
     public void StateChange(int state)
     {
         if (!isExit)
