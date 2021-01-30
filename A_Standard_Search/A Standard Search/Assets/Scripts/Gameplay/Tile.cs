@@ -13,6 +13,8 @@ public class Tile : MonoBehaviour
     public int currState;
     public Animator animator;
     public bool isExit;
+    public Sprite white; // Sprite for the "white" / 0 state
+    public Sprite black; // Sprite for the "black" / 1 state
 
     void Start()
     {
