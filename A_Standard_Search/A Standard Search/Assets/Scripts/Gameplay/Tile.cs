@@ -7,7 +7,6 @@ public class Tile : MonoBehaviour
 {
 
     public int currState;
-    public int animate;
     private Animator animator;
     private enum animatenames {a1,a2,a3,a4};
 
