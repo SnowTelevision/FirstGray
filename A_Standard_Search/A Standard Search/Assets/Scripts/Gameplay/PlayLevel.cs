@@ -66,10 +66,10 @@ public class PlayLevel : MonoBehaviour
     {
         while (true)
         {
-            startPointXcoord = BetterRandom.betterRandom(0, currentPattern.width);
-            startPointYcoord = BetterRandom.betterRandom(0, currentPattern.height);//get a random start point
-            exitPointXcoord = BetterRandom.betterRandom(0, currentPattern.width);
-            exitPointYcoord = BetterRandom.betterRandom(0, currentPattern.height);//get a random exit point
+            startPointXcoord = BetterRandom.betterRandom(0, currentLevel.width);
+            startPointYcoord = BetterRandom.betterRandom(0, currentLevel.height);//get a random start point
+            exitPointXcoord = BetterRandom.betterRandom(0, currentLevel.width);
+            exitPointYcoord = BetterRandom.betterRandom(0, currentLevel.height);//get a random exit point
             if (startPointXcoord != exitPointXcoord || startPointYcoord != exitPointYcoord)
                 break;//check if player was born at exit
         }
@@ -93,16 +93,26 @@ public class PlayLevel : MonoBehaviour
         // Proceed result base on the grid color and coord the player moved to
         SinglePattern previousPattern = currentPattern;
         SinglePattern nextPattern = null;
-        switch (GetGrid(currentPattern, playerXcoord, playerYcoord))
+
+        // If this is the start move from a new level
+        if (xDir == 0 && yDir == 0)
         {
-            // White grid
-            case 0:
-                nextPattern = GetPattern(playerXcoord, playerYcoord);
-                break;
-            // Gray grid
-            case 1:
-                nextPattern = currentPattern;
-                break;
+            previousPattern = GetPattern(playerXcoord, playerYcoord);
+            nextPattern = GetPattern(playerXcoord, playerYcoord);
+        }
+        else
+        {
+            switch (GetGrid(currentPattern, playerXcoord, playerYcoord))
+            {
+                // White grid
+                case 0:
+                    nextPattern = GetPattern(playerXcoord, playerYcoord);
+                    break;
+                // Gray grid
+                case 1:
+                    nextPattern = currentPattern;
+                    break;
+            }
         }
 
         currentPattern = nextPattern;
@@ -124,7 +134,7 @@ public class PlayLevel : MonoBehaviour
     public int GetGrid(SinglePattern refPattern, int x, int y)
     {
         int yIndex = refPattern.height - y - 1; // Get the y index for the grid for the given coord
-        int index = x + refPattern.width * y; // Get the index for the coord
+        int index = x + refPattern.width * yIndex; // Get the index for the coord
         return refPattern.pattern[index];
     }
 
@@ -137,7 +147,7 @@ public class PlayLevel : MonoBehaviour
     public SinglePattern GetPattern(int x, int y)
     {
         int yIndex = currentLevel.height - y - 1; // Get the y index for the grid for the given coord
-        int index = x + currentLevel.width * y; // Get the index for the coord
+        int index = x + currentLevel.width * yIndex; // Get the index for the coord
         return currentLevel.patterns[index];
     }
 
@@ -175,7 +185,8 @@ public class PlayLevel : MonoBehaviour
     /// </summary>
     public void CreateNewLevelGridObjects()
     {
-        currentGridDisplays.ForEach(g => Destroy(g)); // Clear any existing grid display from last level
+        currentGridDisplays.ForEach(g => DestroyImmediate(g)); // Clear any existing grid display from last level
+        currentGridDisplays.Clear();
 
         for (int y = 0; y < currentLevel.height; y++)
         {
@@ -185,6 +196,12 @@ public class PlayLevel : MonoBehaviour
                 Vector3 newGridPosition = new Vector3(x * gridDistance, 0, (currentLevel.height - y - 1) * gridDistance);
                 newGridDisplay.transform.position = newGridPosition;
                 currentGridDisplays.Add(newGridDisplay);
+
+                // If is exit
+                if (x == exitPointXcoord && currentLevel.height - y - 1 == exitPointYcoord)
+                {
+                    newGridDisplay.GetComponent<Tile>().IAmExit();
+                }
             }
         }
 
@@ -205,10 +222,10 @@ public class PlayLevel : MonoBehaviour
 
         currentLevel = newLevelData;
 
+        SetRandomStartAndExit();
+
         // Create new map
         CreateNewLevelGridObjects();
-
-        SetRandomStartAndExit();
 
         // Make first move for the player
         playerXcoord = startPointXcoord;
