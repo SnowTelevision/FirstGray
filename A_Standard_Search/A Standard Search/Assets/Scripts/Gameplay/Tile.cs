@@ -20,22 +20,46 @@ public class Tile : MonoBehaviour
 
     public void StateChange(int state)
     {
-        if(state == 0 && currState == 0)//light to light
+        if (!isExit)
         {
-            animator.playAnime(0);
+            if (state == 0 && currState == 0)//light to light
+            {
+                animator.playAnime("0 to 0");
+            }
+            if (state == 0 && currState == 1)//light to dark
+            {
+                animator.playAnime("1 to 0");
+            }
+            if (state == 1 && currState == 0)//dark to light
+            {
+                animator.playAnime("0 to 1");
+            }
+            if (state == 1 && currState == 1)//dark to dark
+            {
+                animator.playAnime("1 to 1");
+            }
         }
-        if (state == 0 && currState == 1)//light to dark
+        else
         {
-            playAnime(0);
+            if (state == 0 && currState == 0)//light to light
+            {
+                animator.playAnime("0 to 0");
+            }
+            if (state == 0 && currState == 1)//light to dark
+            {
+                animator.playAnime("1 to 0");
+            }
+            if (state == 1 && currState == 0)//dark to light
+            {
+                animator.playAnime("0 to 1");
+            }
+            if (state == 1 && currState == 1)//dark to dark
+            {
+                animator.playAnime("1 to 1");
+            }
         }
-        if (state == 1 && currState == 0)//dark to light
-        {
-            playAnime(0);
-        }
-        if (state == 1 && currState == 1)//dark to dark
-        {
-            playAnime(0);
-        }
+
+
         Debug.Log("My state changes.");
         currState = state;
         return;
