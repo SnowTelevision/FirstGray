@@ -22,7 +22,7 @@ public class Tile : MonoBehaviour
     }
     public void IAmExit()
     {
-        isExit = 1;
+        isExit = false;
         StateChange(currState);
     }
     
