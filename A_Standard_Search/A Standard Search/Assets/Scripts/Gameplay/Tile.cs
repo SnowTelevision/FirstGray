@@ -16,11 +16,12 @@ public class Tile : MonoBehaviour
 
     void Start()
     {
-       isExit = false;
+ 
     }
     public void IAmExit()
     {
-        isExit = false;
+        Debug.Log("call i am Exit func");
+        isExit = true;
         StateChange(currState);
     }
     
@@ -47,6 +48,7 @@ public class Tile : MonoBehaviour
         }
         else
         {
+            Debug.Log("set Exit state");
             if (state == 0 && currState == 0)//light to light
             {
                 animator.SetInteger("State", 5);
@@ -66,7 +68,8 @@ public class Tile : MonoBehaviour
         }
 
 
-        Debug.Log("My state changes.");
+        int k = animator.GetInteger("State");
+        
         currState = state;
         return;
     }
@@ -75,10 +78,10 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+       /* AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
         if (info.normalizedTime >= 1.0f)//check if animate is finished
         {
             StateChange(currState);//make animation looping
-        }
+        }*/
     }
 }
