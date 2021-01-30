@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
+
 
 
 public class Tile : MonoBehaviour
@@ -14,48 +16,49 @@ public class Tile : MonoBehaviour
 
     void Start()
     {
-       animator= GetComponent<Animator>();
+       animator = GetComponent<Animator>();
+       isExit = false;
     }
 
-
+    [ShowInInspector]
     public void StateChange(int state)
     {
         if (!isExit)
         {
             if (state == 0 && currState == 0)//light to light
             {
-                animator.playAnime("0 to 0");
+                animator.Play("0 to 0");
             }
             if (state == 0 && currState == 1)//light to dark
             {
-                animator.playAnime("1 to 0");
+                animator.Play("1 to 0");
             }
             if (state == 1 && currState == 0)//dark to light
             {
-                animator.playAnime("0 to 1");
+                animator.Play("0 to 1");
             }
             if (state == 1 && currState == 1)//dark to dark
             {
-                animator.playAnime("1 to 1");
+                animator.Play("1 to 1");
             }
         }
         else
         {
             if (state == 0 && currState == 0)//light to light
             {
-                animator.playAnime("0 to 0");
+                animator.Play("exit 0 to 0");
             }
             if (state == 0 && currState == 1)//light to dark
             {
-                animator.playAnime("1 to 0");
+                animator.Play("exit 1 to 0");
             }
             if (state == 1 && currState == 0)//dark to light
             {
-                animator.playAnime("0 to 1");
+                animator.Play("exit 0 to 1");
             }
             if (state == 1 && currState == 1)//dark to dark
             {
-                animator.playAnime("1 to 1");
+                animator.Play("exit 1 to 1");
             }
         }
 
@@ -64,12 +67,6 @@ public class Tile : MonoBehaviour
         currState = state;
         return;
     }
-
-    void playAnime(int animeID)//play a state change animate 
-    {
-
-        return;
-    } 
     // Start is called before the first frame update
 
     // Update is called once per frame
