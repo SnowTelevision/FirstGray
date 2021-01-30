@@ -9,14 +9,11 @@ using Sirenix.OdinInspector;
 /// </summary>
 public class PlayLevel : MonoBehaviour
 {
-    // TEMP
-    public Material white;
-    public Material black;
-    // TEMP
-
     public GameObject gridObject; // Prefab for display for a single grid
     public float gridDistance; // Distance between each grid display
     public float camHeight;
+    public Sprite exitWhite; // White / 0 sprite for the exit tile
+    public Sprite exitBlack; // Black / 1 sprite for the exit tile
 
     public bool isUpdatingPattern; // Prevent player from moving while the pattern update animation is ongoing
     public LevelPatterns currentLevel;
@@ -24,11 +21,18 @@ public class PlayLevel : MonoBehaviour
     public int playerYcoord;
     public SinglePattern currentPattern;
     public List<GameObject> currentGridDisplays; // Objects for all the grids in current level
-    private int startPointXcoord;
-    private int startPointYcoord;
-    private int exitPointXcoord;
-    private int exitPointYcoord;
+    public int startPointXcoord;
+    public int startPointYcoord;
+    public int exitPointXcoord;
+    public int exitPointYcoord;
     public List<Vector2> moveHistory; // Player's move history of the current playing level
+
+    public static PlayLevel instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     /// <summary>
     /// Keyboard controls
@@ -86,7 +90,10 @@ public class PlayLevel : MonoBehaviour
     public SinglePattern PlayerMoved(int xDir, int yDir)
     {
         // Store last position coord
-        moveHistory.Add(new Vector2(playerXcoord, playerYcoord));
+        if (xDir != 0 || yDir != 0)
+        {
+            moveHistory.Add(new Vector2(playerXcoord, playerYcoord));
+        }
 
         // Get player new position
         playerXcoord += xDir;
@@ -178,8 +185,8 @@ public class PlayLevel : MonoBehaviour
     {
         for (int i = 0; i < currentGridDisplays.Count; i++)
         {
-            currentGridDisplays[i].GetComponent<Tile>().StateChange(newPattern.pattern[i]);
-            // Test
+            //currentGridDisplays[i].GetComponent<Tile>().StateChange(newPattern.pattern[i]);
+            currentGridDisplays[i].GetComponent<Tile>().currState = newPattern.pattern[i];
             UpdateTile(currentGridDisplays[i], newPattern.pattern[i]);
         }
 
@@ -195,9 +202,17 @@ public class PlayLevel : MonoBehaviour
     public bool CheckWinning()
     {
         if (playerXcoord == exitPointXcoord && playerYcoord == exitPointYcoord)
+        {
+            //print("win");
+            GameProcess.instance.WinLevel();
             return true;
+        }
         else
+        {
+            //print("lose");
+            GameProcess.instance.LoseLevel();
             return false;
+        }
     }
 
     /// <summary>
@@ -220,7 +235,10 @@ public class PlayLevel : MonoBehaviour
                 // If is exit
                 if (x == exitPointXcoord && currentLevel.height - y - 1 == exitPointYcoord)
                 {
-                    newGridDisplay.GetComponent<Tile>().IAmExit();
+                    //newGridDisplay.GetComponent<Tile>().IAmExit();
+                    newGridDisplay.GetComponent<Tile>().isExit = true;
+                    newGridDisplay.GetComponent<Tile>().white = exitWhite;
+                    newGridDisplay.GetComponent<Tile>().black = exitBlack;
                 }
             }
         }
@@ -253,19 +271,22 @@ public class PlayLevel : MonoBehaviour
         PlayerMoved(0, 0);
     }
 
-    // Test
-
+    /// <summary>
+    /// Simply switch the tile's sprite for pattern change
+    /// </summary>
+    /// <param name="tileToUpdate"></param>
+    /// <param name="state"></param>
     public void UpdateTile(GameObject tileToUpdate, int state)
     {
-        if (tileToUpdate.TryGetComponent(out MeshRenderer m))
+        if (tileToUpdate.TryGetComponent(out SpriteRenderer sr))
         {
             if (state == 0)
             {
-                m.sharedMaterial = white;
+                sr.sprite = tileToUpdate.GetComponent<Tile>().white;
             }
             else
             {
-                m.sharedMaterial = black;
+                sr.sprite = tileToUpdate.GetComponent<Tile>().black;
             }
         }
     }

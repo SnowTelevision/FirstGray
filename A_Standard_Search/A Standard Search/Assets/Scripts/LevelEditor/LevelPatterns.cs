@@ -27,7 +27,7 @@ public class LevelPatterns : MonoBehaviour
         // Create pattern storages
         for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < height; x++)
+            for (int x = 0; x < width; x++)
             {
                 GameObject newStorage = new GameObject(x + ", " + y);
                 SinglePattern newPattern = newStorage.AddComponent<SinglePattern>();
