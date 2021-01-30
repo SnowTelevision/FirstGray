@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class NewBehaviourScript : MonoBehaviour
+public class Tile : MonoBehaviour
 {
 
     public int currState;
     public int animate;
 
 
-    void StateChange(int state)
+    public void StateChange(int state)
     {
         Debug.Log("My state changes.");
         return;

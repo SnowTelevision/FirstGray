@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 /// <summary>
 /// Handle player input for playing a level and the process of the played level
@@ -8,7 +9,12 @@ using UnityEngine;
 /// </summary>
 public class PlayLevel : MonoBehaviour
 {
-
+    // TEMP
+    public Material white;
+    public Material black;
+    // TEMP
+    public GameObject gridObject; // Prefab for display for a single grid
+    public float gridDistance; // Distance between each grid display
 
     public bool isUpdatingPattern; // Prevent player from moving while the pattern update animation is ongoing
     public LevelPatterns currentLevel;
@@ -20,7 +26,7 @@ public class PlayLevel : MonoBehaviour
     private int startPointYcoord;
     private int exitPointXcoord;
     private int exitPointYcoord;
-
+    public List<Vector2> moveHistory; // Player's move history of the current playing level
 
     /// <summary>
     /// Keyboard controls
@@ -77,6 +83,9 @@ public class PlayLevel : MonoBehaviour
     /// <returns></returns>
     public SinglePattern PlayerMoved(int xDir, int yDir)
     {
+        // Store last position coord
+        moveHistory.Add(new Vector2(playerXcoord, playerYcoord));
+
         // Get player new position
         playerXcoord += xDir;
         playerYcoord += yDir;
@@ -139,6 +148,11 @@ public class PlayLevel : MonoBehaviour
     /// <param name="currentPattern"></param>
     public IEnumerator UpdateGridsDisplay(SinglePattern newPattern, SinglePattern currentPattern)
     {
+        for (int i = 0; i < currentGridDisplays.Count; i++)
+        {
+            currentGridDisplays[i].GetComponent<Tile>().StateChange(newPattern.pattern[i]);
+        }
+
         yield return null;
 
         isUpdatingPattern = false;
@@ -154,5 +168,51 @@ public class PlayLevel : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    /// <summary>
+    /// Create GameObjects for the grid for a new level and re-focus the camera
+    /// </summary>
+    public void CreateNewLevelGridObjects()
+    {
+        currentGridDisplays.ForEach(g => Destroy(g)); // Clear any existing grid display from last level
+
+        for (int y = 0; y < currentLevel.height; y++)
+        {
+            for (int x = 0; x < currentLevel.width; x++)
+            {
+                GameObject newGridDisplay = Instantiate(gridObject);
+                Vector3 newGridPosition = new Vector3(x * gridDistance, 0, (currentLevel.height - y - 1) * gridDistance);
+                newGridDisplay.transform.position = newGridPosition;
+                currentGridDisplays.Add(newGridDisplay);
+            }
+        }
+
+        // Reposition camera
+        Vector3 newCamPosition = new Vector3(currentLevel.width * gridDistance * 0.5f, 0, currentLevel.height * gridDistance * 0.5f);
+        Camera.main.transform.position = newCamPosition;
+    }
+
+    /// <summary>
+    /// Start a new level
+    /// </summary>
+    /// <param name="newLevelData"></param>
+    [ShowInInspector]
+    public void StartNewLevel(LevelPatterns newLevelData)
+    {
+        // Refresh player move history
+        moveHistory = new List<Vector2>();
+
+        currentLevel = newLevelData;
+
+        // Create new map
+        CreateNewLevelGridObjects();
+
+        SetRandomStartAndExit();
+
+        // Make first move for the player
+        playerXcoord = startPointXcoord;
+        playerYcoord = startPointYcoord;
+        PlayerMoved(0, 0);
     }
 }
