@@ -13,8 +13,10 @@ public class PlayLevel : MonoBehaviour
     public Material white;
     public Material black;
     // TEMP
+
     public GameObject gridObject; // Prefab for display for a single grid
     public float gridDistance; // Distance between each grid display
+    public float camHeight;
 
     public bool isUpdatingPattern; // Prevent player from moving while the pattern update animation is ongoing
     public LevelPatterns currentLevel;
@@ -36,23 +38,23 @@ public class PlayLevel : MonoBehaviour
 
         if (!isUpdatingPattern) // Only take player's key input if there is no pattern update animation playing
         {
-            if (Input.GetKey(KeyCode.W) | Input.GetKey(KeyCode.UpArrow))//move up
+            if (Input.GetKeyUp(KeyCode.W) | Input.GetKeyUp(KeyCode.UpArrow))//move up
             {
                 this.PlayerMoved(0, 1);
             }
-            if (Input.GetKey(KeyCode.S) | Input.GetKey(KeyCode.DownArrow))//move down
+            if (Input.GetKeyUp(KeyCode.S) | Input.GetKeyUp(KeyCode.DownArrow))//move down
             {
                 this.PlayerMoved(0, -1);
             }
-            if (Input.GetKey(KeyCode.A) | Input.GetKey(KeyCode.LeftArrow))//move left
+            if (Input.GetKeyUp(KeyCode.A) | Input.GetKeyUp(KeyCode.LeftArrow))//move left
             {
                 this.PlayerMoved(-1, 0);
             }
-            if (Input.GetKey(KeyCode.D) | Input.GetKey(KeyCode.RightArrow))//move right
+            if (Input.GetKeyUp(KeyCode.D) | Input.GetKeyUp(KeyCode.RightArrow))//move right
             {
                 this.PlayerMoved(1, 0);
             }
-            if (Input.GetKey(KeyCode.Space))// press space
+            if (Input.GetKeyUp(KeyCode.Space))// press space
             {
                 this.CheckWinning();
             }
@@ -66,10 +68,10 @@ public class PlayLevel : MonoBehaviour
     {
         while (true)
         {
-            startPointXcoord = BetterRandom.betterRandom(0, currentLevel.width);
-            startPointYcoord = BetterRandom.betterRandom(0, currentLevel.height);//get a random start point
-            exitPointXcoord = BetterRandom.betterRandom(0, currentLevel.width);
-            exitPointYcoord = BetterRandom.betterRandom(0, currentLevel.height);//get a random exit point
+            startPointXcoord = BetterRandom.betterRandom(0, currentLevel.width - 1);
+            startPointYcoord = BetterRandom.betterRandom(0, currentLevel.height - 1);//get a random start point
+            exitPointXcoord = BetterRandom.betterRandom(0, currentLevel.width - 1);
+            exitPointYcoord = BetterRandom.betterRandom(0, currentLevel.height - 1);//get a random exit point
             if (startPointXcoord != exitPointXcoord || startPointYcoord != exitPointYcoord)
                 break;//check if player was born at exit
         }
@@ -88,7 +90,23 @@ public class PlayLevel : MonoBehaviour
 
         // Get player new position
         playerXcoord += xDir;
+        if (playerXcoord < 0)
+        {
+            playerXcoord = currentLevel.width - 1;
+        }
+        if (playerXcoord == currentLevel.width)
+        {
+            playerXcoord = 0;
+        }
         playerYcoord += yDir;
+        if (playerYcoord < 0)
+        {
+            playerYcoord = currentLevel.height - 1;
+        }
+        if (playerYcoord == currentLevel.height)
+        {
+            playerYcoord = 0;
+        }
 
         // Proceed result base on the grid color and coord the player moved to
         SinglePattern previousPattern = currentPattern;
@@ -147,7 +165,7 @@ public class PlayLevel : MonoBehaviour
     public SinglePattern GetPattern(int x, int y)
     {
         int yIndex = currentLevel.height - y - 1; // Get the y index for the grid for the given coord
-        int index = x + currentLevel.width * yIndex; // Get the index for the coord
+        int index = x + currentLevel.width * y; // Get the index for the coord
         return currentLevel.patterns[index];
     }
 
@@ -161,6 +179,8 @@ public class PlayLevel : MonoBehaviour
         for (int i = 0; i < currentGridDisplays.Count; i++)
         {
             currentGridDisplays[i].GetComponent<Tile>().StateChange(newPattern.pattern[i]);
+            // Test
+            UpdateTile(currentGridDisplays[i], newPattern.pattern[i]);
         }
 
         yield return null;
@@ -206,7 +226,7 @@ public class PlayLevel : MonoBehaviour
         }
 
         // Reposition camera
-        Vector3 newCamPosition = new Vector3(currentLevel.width * gridDistance * 0.5f, 0, currentLevel.height * gridDistance * 0.5f);
+        Vector3 newCamPosition = new Vector3((currentLevel.width - 1) * gridDistance * 0.5f, camHeight, (currentLevel.height - 1) * gridDistance * 0.5f);
         Camera.main.transform.position = newCamPosition;
     }
 
@@ -232,4 +252,22 @@ public class PlayLevel : MonoBehaviour
         playerYcoord = startPointYcoord;
         PlayerMoved(0, 0);
     }
+
+    // Test
+
+    public void UpdateTile(GameObject tileToUpdate, int state)
+    {
+        if (tileToUpdate.TryGetComponent(out MeshRenderer m))
+        {
+            if (state == 0)
+            {
+                m.sharedMaterial = white;
+            }
+            else
+            {
+                m.sharedMaterial = black;
+            }
+        }
+    }
+
 }
