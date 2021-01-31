@@ -186,7 +186,7 @@ public class PlayLevel : MonoBehaviour
         for (int i = 0; i < currentGridDisplays.Count; i++)
         {
             currentGridDisplays[i].GetComponent<Tile>().StateChange(newPattern.pattern[i]);
-            currentGridDisplays[i].GetComponent<Tile>().currState = newPattern.pattern[i];
+            //currentGridDisplays[i].GetComponent<Tile>().currState = newPattern.pattern[i];
             //UpdateTile(currentGridDisplays[i], newPattern.pattern[i]);
         }
 
@@ -236,9 +236,9 @@ public class PlayLevel : MonoBehaviour
                 if (x == exitPointXcoord && currentLevel.height - y - 1 == exitPointYcoord)
                 {
                     newGridDisplay.GetComponent<Tile>().IAmExit();
-                    newGridDisplay.GetComponent<Tile>().isExit = true;
-                    newGridDisplay.GetComponent<Tile>().white = exitWhite;
-                    newGridDisplay.GetComponent<Tile>().black = exitBlack;
+                    //newGridDisplay.GetComponent<Tile>().isExit = true;
+                    //newGridDisplay.GetComponent<Tile>().white = exitWhite;
+                    //newGridDisplay.GetComponent<Tile>().black = exitBlack;
                 }
             }
         }

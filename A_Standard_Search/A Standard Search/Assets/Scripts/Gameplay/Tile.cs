@@ -32,19 +32,19 @@ public class Tile : MonoBehaviour
         {
             if (state == 0 && currState == 0)//light to light
             {
-                animator.SetInteger("State", 2);
+                animator.SetInteger("State", 1);
             }
-            if (state == 0 && currState == 1)//light to dark
-            {
-                animator.SetInteger("State", 0);
-            }
-            if (state == 1 && currState == 0)//dark to light
+            if (state == 0 && currState == 1)//dark to light
             {
                 animator.SetInteger("State", 3);
             }
+            if (state == 1 && currState == 0)//light to dark
+            {
+                animator.SetInteger("State", 0);
+            }
             if (state == 1 && currState == 1)//dark to dark
             {
-                animator.SetInteger("State", 1);
+                animator.SetInteger("State", 2);
             }
         }
         else
@@ -53,22 +53,19 @@ public class Tile : MonoBehaviour
             {
                 animator.SetInteger("State", 5);
             }
-            if (state == 0 && currState == 1)//light to dark
-            {
-                animator.SetInteger("State", 7);
-            }
-            if (state == 1 && currState == 0)//dark to light
+            if (state == 0 && currState == 1)//dark to light
             {
                 animator.SetInteger("State", 4);
+            }
+            if (state == 1 && currState == 0)//light to dark
+            {
+                animator.SetInteger("State", 7);
             }
             if (state == 1 && currState == 1)//dark to dark
             {
                 animator.SetInteger("State", 6);
             }
         }
-
-
-        int k = animator.GetInteger("State");
         
         currState = state;
         return;
@@ -78,10 +75,6 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       /* AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
-        if (info.normalizedTime >= 1.0f)//check if animate is finished
-        {
-            StateChange(currState);//make animation looping
-        }*/
+
     }
 }
