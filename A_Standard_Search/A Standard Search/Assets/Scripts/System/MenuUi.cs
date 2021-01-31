@@ -9,5 +9,13 @@ public class MenuUi : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
         Debug.Log("It should work...");
+
+        // Stop menu bgm
+        AudioManager.instance.PauseBGM();
+    }
+
+    private void Start()
+    {
+        AudioManager.instance.StartBGM(AudioManager.instance.bgm);
     }
 }

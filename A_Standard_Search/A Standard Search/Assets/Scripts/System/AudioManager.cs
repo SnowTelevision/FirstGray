@@ -22,7 +22,7 @@ public class AudioManager : MonoBehaviour
     {
         DontDestroyOnLoad(transform.gameObject);
         instance = this;
-        masterVolume = 1;
+        masterVolume = 0.5f;
         //Slider volumeSlider = FindObjectOfType<Slider>(true);
         //if (volumeSlider != null)
         //{
@@ -33,6 +33,8 @@ public class AudioManager : MonoBehaviour
     public void UpdateMasterVolume(Slider volumeSlider)
     {
         masterVolume = volumeSlider.value;
+        sfxPlayer.volume = masterVolume;
+        bgmPlayer.volume = masterVolume;
     }
 
     public void StartBGM(AudioClip bgm)
