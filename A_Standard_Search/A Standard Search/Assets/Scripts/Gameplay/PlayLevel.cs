@@ -18,7 +18,7 @@ public class PlayLevel : MonoBehaviour
     public GameObject levelFrame; // The frame sprite for the outside border of each level (need to adjust size to level)
     public Image levelFader;
 
-    public bool isUpdatingPattern; // Prevent player from moving while the pattern update animation is ongoing
+    public bool canPlayerMove; // Prevent player from moving while the pattern update animation is ongoing
     public LevelPatterns currentLevel;
     public int playerXcoord;
     public int playerYcoord;
@@ -45,7 +45,7 @@ public class PlayLevel : MonoBehaviour
     private void Update()
     {
 
-        if (!isUpdatingPattern) // Only take player's key input if there is no pattern update animation playing
+        if (!canPlayerMove) // Only take player's key input if there is no animation playing
         {
             if (Input.GetKeyUp(KeyCode.W) | Input.GetKeyUp(KeyCode.UpArrow))//move up
             {
@@ -151,7 +151,7 @@ public class PlayLevel : MonoBehaviour
         currentPattern = nextPattern;
 
         // Play the pattern update animation (can have animation even if the pattern didn't change)
-        isUpdatingPattern = true;
+        canPlayerMove = true;
         StartCoroutine(UpdateGridsDisplay(currentPattern, previousPattern));
 
         return nextPattern;
@@ -200,7 +200,7 @@ public class PlayLevel : MonoBehaviour
 
         yield return animationWait;
 
-        isUpdatingPattern = false;
+        canPlayerMove = false;
     }
 
     /// <summary>
@@ -297,6 +297,8 @@ public class PlayLevel : MonoBehaviour
     /// <returns></returns>
     public IEnumerator LevelTransition(LevelPatterns newLevelData)
     {
+        canPlayerMove = false;
+
         float duration = 0.75f;
 
         if (!GameProcess.firstStart) // If the game just start then only fade out
@@ -331,6 +333,8 @@ public class PlayLevel : MonoBehaviour
         Color noColor = levelFader.color;
         noColor.a = 0;
         levelFader.color = noColor;
+
+        canPlayerMove = true;
     }
 
     /// <summary>
