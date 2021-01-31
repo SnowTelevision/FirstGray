@@ -33,6 +33,7 @@ public class Tile : MonoBehaviour
             if (state == 0 && currState == 0)//light to light
             {
                 animator.SetInteger("State", 1);
+                animator.Play("Base Layer.0 to 0", 0, 0.0f);
                 Debug.Log("light to light");
             }
             if (state == 0 && currState == 1)//dark to light
@@ -48,6 +49,7 @@ public class Tile : MonoBehaviour
             if (state == 1 && currState == 1)//dark to dark
             {
                 animator.SetInteger("State", 2);
+                animator.Play("Base Layer.1 to 1", 0, 0.0f);
                 Debug.Log("dark to dark");
             }
         }
@@ -56,6 +58,7 @@ public class Tile : MonoBehaviour
             if (state == 0 && currState == 0)//light to light
             {
                 animator.SetInteger("State", 5);
+                animator.Play("Base Layer.exit 0 to 0", 0, 0.0f);
                 Debug.Log("EXlight to light");
             }
             if (state == 0 && currState == 1)//dark to light
@@ -71,6 +74,7 @@ public class Tile : MonoBehaviour
             if (state == 1 && currState == 1)//dark to dark
             {
                 animator.SetInteger("State", 6);
+                animator.Play("Base Layer.exit 1 to 1", 0, 0.0f);
                 Debug.Log("EXdark to dark");
             }
         }
@@ -84,6 +88,7 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
+            
     }
 }
