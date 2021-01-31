@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: acc7583187ec021469f1cc7900096f76
+guid: 531186b6aa3cd2c4d91dab87af20b814
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -6229867905644685761
+    second: GGJ2021-TextArea_0
+  - first:
+      213: -7994767997048163951
+    second: GGJ2021-TextArea_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -41,13 +47,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 160, y: 80, z: 140, w: 32}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -161,11 +167,53 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: GGJ2021-TextArea_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 180, y: 83, z: 120, w: 43}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f361176a5201b89a0800000000000000
+      internalID: -6229867905644685761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GGJ2021-TextArea_1
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 120
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 83, z: 44, w: 43}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19178426dd0ec0190800000000000000
+      internalID: -7994767997048163951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 8f672bd28bd1b424887115e978c0f118
     internalID: 0
     vertices: []
     indices: 
