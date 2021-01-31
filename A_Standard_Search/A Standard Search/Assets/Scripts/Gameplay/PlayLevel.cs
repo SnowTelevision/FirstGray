@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine.UI;
 
 /// <summary>
 /// Handle player input for playing a level and the process of the played level
@@ -15,6 +16,7 @@ public class PlayLevel : MonoBehaviour
     public Sprite exitWhite; // White / 0 sprite for the exit tile
     public Sprite exitBlack; // Black / 1 sprite for the exit tile
     public GameObject levelFrame; // The frame sprite for the outside border of each level (need to adjust size to level)
+    public Image levelFader;
 
     public bool isUpdatingPattern; // Prevent player from moving while the pattern update animation is ongoing
     public LevelPatterns currentLevel;
@@ -287,6 +289,48 @@ public class PlayLevel : MonoBehaviour
         playerXcoord = startPointXcoord;
         playerYcoord = startPointYcoord;
         PlayerMoved(0, 0);
+    }
+
+    /// <summary>
+    /// Transition for the level when start new level or repeat current level
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator LevelTransition(LevelPatterns newLevelData)
+    {
+        float duration = 0.75f;
+
+        if (!GameProcess.firstStart) // If the game just start then only fade out
+        {
+            // Fade in screen
+            for (float t = 0; t < duration; t += Time.deltaTime)
+            {
+                Color newColor = levelFader.color;
+                newColor.a = t / duration;
+                levelFader.color = newColor;
+                yield return null;
+            }
+            Color fullColor = levelFader.color;
+            fullColor.a = 1;
+            levelFader.color = fullColor;
+        }
+        else
+        {
+            GameProcess.firstStart = false;
+        }
+
+        StartNewLevel(newLevelData);
+
+        // Fade out screen
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            Color newColor = levelFader.color;
+            newColor.a = (duration - t) / duration;
+            levelFader.color = newColor;
+            yield return null;
+        }
+        Color noColor = levelFader.color;
+        noColor.a = 0;
+        levelFader.color = noColor;
     }
 
     /// <summary>

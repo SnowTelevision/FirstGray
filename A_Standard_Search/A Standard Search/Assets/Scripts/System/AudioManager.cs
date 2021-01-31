@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip levelWinSFX;
     public AudioClip levelLoseSFX;
     public AudioClip bgm;
+    public AudioClip endingBGM;
     public AudioSource sfxPlayer;
     public AudioSource bgmPlayer;
 
@@ -19,8 +20,14 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(transform.gameObject);
         instance = this;
         masterVolume = 1;
+        //Slider volumeSlider = FindObjectOfType<Slider>(true);
+        //if (volumeSlider != null)
+        //{
+        //    masterVolume = volumeSlider.value;
+        //}
     }
 
     public void UpdateMasterVolume(Slider volumeSlider)
@@ -32,7 +39,7 @@ public class AudioManager : MonoBehaviour
     {
         bgmPlayer.volume = masterVolume;
         bgmPlayer.clip = bgm;
-        bgmPlayer.UnPause();
+        bgmPlayer.Play();
     }
 
     public void PauseBGM()
@@ -43,9 +50,17 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(AudioClip sfx)
     {
         sfxPlayer.Stop();
-        float k = BetterRandom.betterRandom(-100, 100)/1000;// avoid machine gun sound
-        sfxPlayer.volume = masterVolume+ masterVolume*k;
+        float k = BetterRandom.betterRandom(-100, 100) / 1000;// avoid machine gun sound
+        sfxPlayer.volume = masterVolume + masterVolume * k;
         sfxPlayer.clip = sfx;
         sfxPlayer.Play();
+    }
+
+    public void PlaySFXOneShot(AudioClip sfx)
+    {
+        sfxPlayer.Stop();
+        float k = BetterRandom.betterRandom(-100, 100) / 1000;// avoid machine gun sound
+        sfxPlayer.volume = masterVolume + masterVolume * k;
+        sfxPlayer.PlayOneShot(sfx);
     }
 }

@@ -172,11 +172,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3f43b6cbeb26549800345cc1d68e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSFX: {fileID: 0}
+  buttonSFX: {fileID: 8300000, guid: 9e886fa864c336b408495d29c8ccbac0, type: 3}
   playerMoveSFX: {fileID: 8300000, guid: b65c58e6681f2244cb26515ce96ab036, type: 3}
-  levelWinSFX: {fileID: 8300000, guid: b34e6a0b0b543a5428ebed1dcf5cb20a, type: 3}
-  levelLoseSFX: {fileID: 8300000, guid: 471b326dd130ff04a9714a806b2f83f3, type: 3}
-  bgm: {fileID: 8300000, guid: e03069f368bed034f8955233045dd244, type: 3}
+  levelWinSFX: {fileID: 8300000, guid: 1d454d6cb224f0447a88b75c38511906, type: 3}
+  levelLoseSFX: {fileID: 8300000, guid: faaa081fb5d49de4bbaf486d010255d5, type: 3}
+  bgm: {fileID: 8300000, guid: f67426f2980e9784493feafd90ca8b9f, type: 3}
+  endingBGM: {fileID: 8300000, guid: 4be0ec46badb39f47adf678519e3bc4d, type: 3}
   sfxPlayer: {fileID: 5897247560434311856}
   bgmPlayer: {fileID: 5860468920168238796}
 --- !u!1 &7259553663840226391
