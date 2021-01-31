@@ -22,7 +22,6 @@ public class Tile : MonoBehaviour
     }
     public void IAmExit()
     {
-        Debug.Log("call i am Exit func");
         isExit = true;
         StateChange(currState);
     }
@@ -50,7 +49,6 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            Debug.Log("set Exit state");
             if (state == 0 && currState == 0)//light to light
             {
                 animator.SetInteger("State", 5);
