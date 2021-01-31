@@ -185,9 +185,9 @@ public class PlayLevel : MonoBehaviour
     {
         for (int i = 0; i < currentGridDisplays.Count; i++)
         {
-            //currentGridDisplays[i].GetComponent<Tile>().StateChange(newPattern.pattern[i]);
+            currentGridDisplays[i].GetComponent<Tile>().StateChange(newPattern.pattern[i]);
             currentGridDisplays[i].GetComponent<Tile>().currState = newPattern.pattern[i];
-            UpdateTile(currentGridDisplays[i], newPattern.pattern[i]);
+            //UpdateTile(currentGridDisplays[i], newPattern.pattern[i]);
         }
 
         yield return null;
@@ -276,19 +276,19 @@ public class PlayLevel : MonoBehaviour
     /// </summary>
     /// <param name="tileToUpdate"></param>
     /// <param name="state"></param>
-    public void UpdateTile(GameObject tileToUpdate, int state)
-    {
-        if (tileToUpdate.TryGetComponent(out SpriteRenderer sr))
-        {
-            if (state == 0)
-            {
-                sr.sprite = tileToUpdate.GetComponent<Tile>().white;
-            }
-            else
-            {
-                sr.sprite = tileToUpdate.GetComponent<Tile>().black;
-            }
-        }
-    }
+    //public void UpdateTile(GameObject tileToUpdate, int state)
+    //{
+    //    if (tileToUpdate.TryGetComponent(out SpriteRenderer sr))
+    //    {
+    //        if (state == 0)
+    //        {
+    //            sr.sprite = tileToUpdate.GetComponent<Tile>().white;
+    //        }
+    //        else
+    //        {
+    //            sr.sprite = tileToUpdate.GetComponent<Tile>().black;
+    //        }
+    //    }
+    //}
 
 }
