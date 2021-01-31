@@ -22,7 +22,6 @@ public class Tile : MonoBehaviour
     }
     public void IAmExit()
     {
-        Debug.Log("call i am Exit func");
         isExit = true;
         StateChange(currState);
     }
