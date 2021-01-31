@@ -86,6 +86,9 @@ public class GameProcess : MonoBehaviour
     /// </summary>
     public IEnumerator GameEnding()
     {
+        // Stop player input after game end
+        PlayLevel.instance.canPlayerMove = false;
+
         float duration = 0.75f;
 
         // Fade in screen
