@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class AudioManager : MonoBehaviour
 {
     public AudioClip buttonSFX;
@@ -42,7 +43,8 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(AudioClip sfx)
     {
         sfxPlayer.Stop();
-        sfxPlayer.volume = masterVolume;
+        float k = BetterRandom.betterRandom(-100, 100)/1000;// avoid machine gun sound
+        sfxPlayer.volume = masterVolume+ masterVolume*k;
         sfxPlayer.clip = sfx;
         sfxPlayer.Play();
     }
