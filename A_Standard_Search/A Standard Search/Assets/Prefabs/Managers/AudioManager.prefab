@@ -176,7 +176,7 @@ MonoBehaviour:
   playerMoveSFX: {fileID: 8300000, guid: b65c58e6681f2244cb26515ce96ab036, type: 3}
   levelWinSFX: {fileID: 8300000, guid: b34e6a0b0b543a5428ebed1dcf5cb20a, type: 3}
   levelLoseSFX: {fileID: 8300000, guid: 471b326dd130ff04a9714a806b2f83f3, type: 3}
-  bgm: {fileID: 0}
+  bgm: {fileID: 8300000, guid: e03069f368bed034f8955233045dd244, type: 3}
   sfxPlayer: {fileID: 5897247560434311856}
   bgmPlayer: {fileID: 5860468920168238796}
 --- !u!1 &7259553663840226391

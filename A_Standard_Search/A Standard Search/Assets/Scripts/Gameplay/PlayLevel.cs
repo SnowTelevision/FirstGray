@@ -14,6 +14,7 @@ public class PlayLevel : MonoBehaviour
     public float camHeight;
     public Sprite exitWhite; // White / 0 sprite for the exit tile
     public Sprite exitBlack; // Black / 1 sprite for the exit tile
+    public GameObject levelFrame; // The frame sprite for the outside border of each level (need to adjust size to level)
 
     public bool isUpdatingPattern; // Prevent player from moving while the pattern update animation is ongoing
     public LevelPatterns currentLevel;
@@ -248,9 +249,21 @@ public class PlayLevel : MonoBehaviour
             }
         }
 
-        // Reposition camera
-        Vector3 newCamPosition = new Vector3((currentLevel.width - 1) * gridDistance * 0.5f, camHeight, (currentLevel.height - 1) * gridDistance * 0.5f);
-        Camera.main.transform.position = newCamPosition;
+        // Reposition and rescale level frame 
+        Vector3 newFramePosition = new Vector3((currentLevel.width - 1) * gridDistance * 0.5f, -0.5f, (currentLevel.height - 1) * gridDistance * 0.5f);
+        levelFrame.transform.position = newFramePosition;
+        Vector2 newFrameScale = new Vector2();
+        newFrameScale.x = 1.5f * currentLevel.width + 0.9f;
+        newFrameScale.y = 1.5f * currentLevel.height + 0.9f;
+        levelFrame.GetComponent<SpriteRenderer>().size = newFrameScale;
+
+        // Reposition level map
+        currentGridDisplays.ForEach(g => g.transform.parent = levelFrame.transform);
+        levelFrame.transform.position = Vector3.zero;
+
+        //// Reposition camera
+        //Vector3 newCamPosition = new Vector3((currentLevel.width - 1) * gridDistance * 0.5f, camHeight, (currentLevel.height - 1) * gridDistance * 0.5f);
+        //Camera.main.transform.position = newCamPosition;
     }
 
     /// <summary>
