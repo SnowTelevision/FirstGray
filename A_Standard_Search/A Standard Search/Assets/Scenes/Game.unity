@@ -1521,8 +1521,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You DON'T know where you are, but you can always try to jump on the boat
-    when you think you reach it
+  m_text: Lost in the sea, you need to find a boat. But do you know where you are?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c151b10b833c92c4695fa0e07e208ae4, type: 2}
   m_sharedMaterial: {fileID: -7334359982854720331, guid: c151b10b833c92c4695fa0e07e208ae4, type: 2}
@@ -2137,7 +2136,7 @@ MonoBehaviour:
   exitBlack: {fileID: 21300000, guid: d90fdddb9cc6e4d49ab405809fc99066, type: 3}
   levelFrame: {fileID: 987000005}
   levelFader: {fileID: 1684405960}
-  isUpdatingPattern: 0
+  canPlayerMove: 0
   currentLevel: {fileID: 0}
   playerXcoord: 0
   playerYcoord: 0

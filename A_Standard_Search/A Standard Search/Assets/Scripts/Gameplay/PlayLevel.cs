@@ -275,6 +275,10 @@ public class PlayLevel : MonoBehaviour
     [ShowInInspector]
     public void StartNewLevel(LevelPatterns newLevelData)
     {
+        // Change level texts
+        GameProcess.instance.levelNameText.text = GameProcess.instance.allLevelNames[GameProcess.instance.currentLevelIndex];
+        GameProcess.instance.levelFlavorText.text = GameProcess.instance.allLevelFlavorTexts[GameProcess.instance.currentLevelIndex].text;
+
         // Refresh player move history
         moveHistory = new List<Vector2>();
 

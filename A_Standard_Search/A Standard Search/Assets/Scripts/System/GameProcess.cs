@@ -30,7 +30,7 @@ public class GameProcess : MonoBehaviour
         StartLevel(currentLevelIndex);
 
         // Play BGM
-        AudioManager.instance.StartBGM(AudioManager.instance.bgm);
+        //AudioManager.instance.StartBGM(AudioManager.instance.bgm);
     }
 
     /// <summary>
@@ -39,8 +39,6 @@ public class GameProcess : MonoBehaviour
     /// <param name="levelIndex"></param>
     public void StartLevel(int levelIndex)
     {
-        levelNameText.text = allLevelNames[levelIndex];
-        levelFlavorText.text = allLevelFlavorTexts[levelIndex].text;
         StartCoroutine(PlayLevel.instance.LevelTransition(allLevels[levelIndex]));
     }
 
