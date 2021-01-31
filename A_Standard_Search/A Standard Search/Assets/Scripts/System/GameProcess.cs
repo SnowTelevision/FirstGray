@@ -24,6 +24,9 @@ public class GameProcess : MonoBehaviour
         // Start level 1
         currentLevelIndex = 0;
         StartLevel(currentLevelIndex);
+
+        // Play BGM
+        AudioManager.instance.StartBGM(AudioManager.instance.bgm);
     }
 
     /// <summary>
@@ -42,6 +45,9 @@ public class GameProcess : MonoBehaviour
     /// </summary>
     public void WinLevel()
     {
+        // Play move sound effect
+        AudioManager.instance.PlaySFX(AudioManager.instance.levelWinSFX);
+
         // If player win the last level
         if (currentLevelIndex == allLevels.Count - 1)
         {
@@ -59,6 +65,9 @@ public class GameProcess : MonoBehaviour
     /// </summary>
     public void LoseLevel()
     {
+        // Play move sound effect
+        AudioManager.instance.PlaySFX(AudioManager.instance.levelLoseSFX);
+
         StartLevel(currentLevelIndex);
     }
 }

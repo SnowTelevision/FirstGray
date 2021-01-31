@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -18,11 +19,12 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        masterVolume = 1;
     }
 
-    public void UpdateMasterVolume(float target)
+    public void UpdateMasterVolume(Slider volumeSlider)
     {
-        masterVolume = target;
+        masterVolume = volumeSlider.value;
     }
 
     public void StartBGM(AudioClip bgm)
