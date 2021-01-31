@@ -33,18 +33,22 @@ public class Tile : MonoBehaviour
             if (state == 0 && currState == 0)//light to light
             {
                 animator.SetInteger("State", 1);
+                Debug.Log("light to light");
             }
             if (state == 0 && currState == 1)//dark to light
             {
                 animator.SetInteger("State", 3);
+                Debug.Log("dark to light");
             }
             if (state == 1 && currState == 0)//light to dark
             {
                 animator.SetInteger("State", 0);
+                Debug.Log("light to dark");
             }
             if (state == 1 && currState == 1)//dark to dark
             {
                 animator.SetInteger("State", 2);
+                Debug.Log("dark to dark");
             }
         }
         else
@@ -52,21 +56,26 @@ public class Tile : MonoBehaviour
             if (state == 0 && currState == 0)//light to light
             {
                 animator.SetInteger("State", 5);
+                Debug.Log("EXlight to light");
             }
             if (state == 0 && currState == 1)//dark to light
             {
                 animator.SetInteger("State", 4);
+                Debug.Log("EXdark to light");
             }
             if (state == 1 && currState == 0)//light to dark
             {
                 animator.SetInteger("State", 7);
+                Debug.Log("EXlight to dark");
             }
             if (state == 1 && currState == 1)//dark to dark
             {
                 animator.SetInteger("State", 6);
+                Debug.Log("EXdark to dark");
             }
         }
-        
+        Debug.Log("state" + currState + "to" + state);
+
         currState = state;
         return;
     }
