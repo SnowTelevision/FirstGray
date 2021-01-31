@@ -250,7 +250,7 @@ public class PlayLevel : MonoBehaviour
         }
 
         // Reposition and rescale level frame 
-        Vector3 newFramePosition = new Vector3((currentLevel.width - 1) * gridDistance * 0.5f, -0.5f, (currentLevel.height - 1) * gridDistance * 0.5f);
+        Vector3 newFramePosition = new Vector3((currentLevel.width - 1) * gridDistance * 0.5f, -0.5f, (currentLevel.height - 1) * gridDistance * 0.5f + 0.05f);
         levelFrame.transform.position = newFramePosition;
         Vector2 newFrameScale = new Vector2();
         newFrameScale.x = 1.5f * currentLevel.width + 0.9f;
