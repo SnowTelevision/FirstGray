@@ -26,12 +26,14 @@ public class PlayLevel : MonoBehaviour
     public int exitPointXcoord;
     public int exitPointYcoord;
     public List<Vector2> moveHistory; // Player's move history of the current playing level
+    public WaitForSeconds animationWait; // How long is the level pattern update animation
 
     public static PlayLevel instance;
 
     private void Awake()
     {
         instance = this;
+        animationWait = new WaitForSeconds(1);
     }
 
     /// <summary>
@@ -127,6 +129,9 @@ public class PlayLevel : MonoBehaviour
         }
         else
         {
+            // Play move sound effect
+            AudioManager.instance.PlaySFX(AudioManager.instance.playerMoveSFX);
+
             switch (GetGrid(currentPattern, playerXcoord, playerYcoord))
             {
                 // White grid
@@ -190,7 +195,7 @@ public class PlayLevel : MonoBehaviour
             //UpdateTile(currentGridDisplays[i], newPattern.pattern[i]);
         }
 
-        yield return null;
+        yield return animationWait;
 
         isUpdatingPattern = false;
     }
